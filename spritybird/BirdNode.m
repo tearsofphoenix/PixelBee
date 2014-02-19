@@ -7,6 +7,7 @@
 //
 
 #import "BirdNode.h"
+#import "DataService.h"
 
 @implementation BirdNode
 
@@ -32,6 +33,9 @@ CGFloat lastVelocity = 0;
 {
     [self.physicsBody setVelocity:CGVectorMake(0, 0)];
     [self.physicsBody applyImpulse:CGVectorMake(0, 40)];
+    
+    [DataService playSound: @"2"];
+    [DataService playSound: @"5"];
 }
 
 @end

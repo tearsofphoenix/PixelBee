@@ -10,9 +10,13 @@
 #import "Scene.h"
 #import "Score.h"
 
+#import "DataService.h"
+
 @interface ViewController ()
+
 @property (weak,nonatomic) IBOutlet SKView * gameView;
 @property (weak,nonatomic) IBOutlet UILabel * bestScoreLabel;
+
 @end
 
 @implementation ViewController
@@ -69,6 +73,8 @@
                      completion: (^(BOOL finished)
                                   {
                                       [flash removeFromSuperview];
+                                      
+                                      [DataService playSound: @"die"];
                                   })];
     
     [self _showBestScore];

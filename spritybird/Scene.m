@@ -15,6 +15,7 @@
 #import "BirdNode.h"
 #import "PipeNode.h"
 #import "Score.h"
+#import "DataService.h"
 
 #define FIRST_BLOCK_PADDING 100
 
@@ -256,20 +257,26 @@
 
 - (void) updateScore:(NSTimeInterval) currentTime
 {
-    for(int i=0;i<nbObstacles;i++){
-        
+    for(int i=0;i<nbObstacles;i++)
+    {
         PipeNode * topPipe = (PipeNode *) topPipes[i];
         
         // Score
         if(topPipe.frame.origin.x + BLOCK_WIDTH > CGRectGetMidX(self.frame) &&
-           topPipe.frame.origin.x + BLOCK_WIDTH < CGRectGetMidX(self.frame)+FLOOR_SCROLLING_SPEED){
+           topPipe.frame.origin.x + BLOCK_WIDTH < CGRectGetMidX(self.frame)+FLOOR_SCROLLING_SPEED)
+        {
+            [DataService playSound: @"score"];
+            
             score +=1;
             scoreLabel.text = [NSString stringWithFormat:@"%d",score];
-            if(score>=10){
+            if(score>=10)
+            {
                 scoreLabel.fontSize = 340;
                 scoreLabel.position = CGPointMake( CGRectGetMidX(self.frame), 120);
             }
-            if(score>=100){
+            
+            if(score>=100)
+            {
                 scoreLabel.fontSize = 200;
                 scoreLabel.position = CGPointMake( CGRectGetMidX(self.frame), 160);
             }
@@ -281,15 +288,20 @@
 
 - (void)didBeginContact:(SKPhysicsContact *)contact
 {
-    if(wasted){
+    if(wasted)
+    {
         return;
     }
 
     wasted = true;
-    [Score registerScore:score];
+    [Score registerScore: score];
+
     NSLog(@"wasted");
     
-    if([self.delegate respondsToSelector:@selector(eventWasted)]){
+    [DataService playSound: @"collision"];
+    
+    if([self.delegate respondsToSelector:@selector(eventWasted)])
+    {
         [self.delegate eventWasted];
     }
     
