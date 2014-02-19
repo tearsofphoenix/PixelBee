@@ -8,17 +8,20 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-
+@class Scene;
 
 @protocol BoucingSceneDelegate <NSObject>
 
 - (void) eventStart;
-- (void) eventPlay;
+- (void) sceneWillPlayGame: (Scene *)scene;
 - (void) eventWasted;
 
 @end
 
 @interface Scene : SKScene<SKPhysicsContactDelegate>
-- (void) startGame;
+
 @property (unsafe_unretained,nonatomic) id<BoucingSceneDelegate> delegate;
+
+- (void)startPlayGame;
+
 @end

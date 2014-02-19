@@ -44,20 +44,22 @@
     bool wasted;
 }
 
-- (id)initWithSize:(CGSize)size {
-    if (self = [super initWithSize:size]) {
-        
+- (id)initWithSize: (CGSize)size
+{
+    if (self = [super initWithSize:size])
+    {        
         self.physicsWorld.contactDelegate = self;
         [[self physicsWorld] setGravity: CGVectorMake(0, -8)];
-        [self startGame];
+        [self initGame];
         
     }
     return self;
 }
 
-- (void) startGame
+- (void)initGame
 {
-    if([self.delegate respondsToSelector:@selector(eventStart)]){
+    if([self.delegate respondsToSelector:@selector(eventStart)])
+    {
         [self.delegate eventStart];
     }
     
@@ -126,7 +128,8 @@
     
 }
 
-- (void)createBird{
+- (void)createBird
+{
     bird = [BirdNode spriteNodeWithImageNamed:@"bird"];
     [bird setPosition:CGPointMake(120, CGRectGetMidY(self.frame))];
     [bird setName:@"bird"];
@@ -135,7 +138,6 @@
 
 - (void) createBlocks
 {
-
     nbObstacles = 3;
     
     CGFloat lastBlockPos = 0;
@@ -197,19 +199,46 @@
 
 #pragma mark - Interaction 
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void)touchesBegan: (NSSet *)touches
+           withEvent: (UIEvent *)event
+{
     
-    if(wasted){
-        [self startGame];
+    if(wasted)
+    {
+        [self initGame];
         return;
     }
     
-    if (!bird.physicsBody) {
+    if (!bird.physicsBody)
+    {
+        [self.view endEditing: YES];
         
-        [self.view endEditing:YES];
+        if([self.delegate respondsToSelector:@selector(sceneWillPlayGame:)])
+        {
+            [self.delegate sceneWillPlayGame: self];
+        }
         
-        if([self.delegate respondsToSelector:@selector(eventPlay)]){
-            [self.delegate eventPlay];
+        [bird startPlaying];
+    }
+    
+    [bird bounce];
+}
+
+- (void)startPlayGame
+{
+    if(wasted)
+    {
+        [self initGame];
+        return;
+    }
+    
+    if (!bird.physicsBody)
+    {
+        [self.view endEditing: YES];
+        
+        if([self.delegate respondsToSelector:@selector(sceneWillPlayGame:)])
+        {
+            [self.delegate sceneWillPlayGame: self];
         }
         
         [bird startPlaying];

@@ -34,7 +34,7 @@ CGFloat lastVelocity = 0;
 {
     [self.physicsBody setVelocity:CGVectorMake(0, 0)];
 //    [self.physicsBody applyImpulse:CGVectorMake(0, 40)];
-    [self.physicsBody applyImpulse:CGVectorMake(0, 30)];
+    [self.physicsBody applyImpulse:CGVectorMake(0, 35)];
     
     [DataService playSound: @"2"];
     [DataService playSound: @"5"];
