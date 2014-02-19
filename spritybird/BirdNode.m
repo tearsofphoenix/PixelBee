@@ -15,7 +15,8 @@ CGFloat lastVelocity = 0;
 
 - (void) update:(NSUInteger) currentTime
 {
-    if(self.physicsBody.velocity.dy != lastVelocity){
+    if(self.physicsBody.velocity.dy != lastVelocity)
+    {
         self.zRotation = M_PI * self.physicsBody.velocity.dy * 0.0005;
         lastVelocity = self.physicsBody.velocity.dy;
     }
@@ -32,7 +33,8 @@ CGFloat lastVelocity = 0;
 - (void) bounce
 {
     [self.physicsBody setVelocity:CGVectorMake(0, 0)];
-    [self.physicsBody applyImpulse:CGVectorMake(0, 40)];
+//    [self.physicsBody applyImpulse:CGVectorMake(0, 40)];
+    [self.physicsBody applyImpulse:CGVectorMake(0, 30)];
     
     [DataService playSound: @"2"];
     [DataService playSound: @"5"];

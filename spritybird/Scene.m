@@ -19,7 +19,7 @@
 
 #define FIRST_BLOCK_PADDING 100
 
-#define FLOOR_SCROLLING_SPEED 5
+#define FLOOR_SCROLLING_SPEED 2.4  //origin is 5
 
 #define VERTICAL_GAP_SIZE 125
 #define BLOCK_WIDTH 55
@@ -27,7 +27,8 @@
 #define BLOCK_INTERVAL_SPACE 140
 
 
-@implementation Scene{
+@implementation Scene
+{
     SKScrollingNode * floor;
     SKScrollingNode * city;
     SKScrollingNode * clouds;
@@ -47,7 +48,7 @@
     if (self = [super initWithSize:size]) {
         
         self.physicsWorld.contactDelegate = self;
-        
+        [[self physicsWorld] setGravity: CGVectorMake(0, -8)];
         [self startGame];
         
     }
@@ -109,7 +110,8 @@
     [self addChild:city];
 }
 
-- (void)createFloor {
+- (void)createFloor
+{
     // Physic
     
     floor = [SKScrollingNode spriteNodeWithImageNamed:@"floor"];
@@ -150,10 +152,16 @@
         [self addChild:bottomPipe];
         [topPipes addObject:bottomPipe];
         
-        if(0 == i){
-            [self place:bottomPipe and:topPipe atX:WIDTH(self)+FIRST_BLOCK_PADDING];
-        }else{
-            [self place:bottomPipe and:topPipe atX:lastBlockPos + BLOCK_WIDTH+BLOCK_INTERVAL_SPACE];
+        if(0 == i)
+        {
+            [self place: bottomPipe
+                    and: topPipe
+                    atX: WIDTH(self)+FIRST_BLOCK_PADDING];
+        }else
+        {
+            [self place: bottomPipe
+                    and: topPipe
+                    atX: lastBlockPos + BLOCK_WIDTH+BLOCK_INTERVAL_SPACE];
         }
         lastBlockPos = topPipe.position.x;
         //NSLog(@"x : %f",lastBlockPos);
