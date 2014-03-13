@@ -40,25 +40,24 @@
     [self.gameView presentScene: _scene];
     [self _showBestScore];
 
-    CGSize size = CGSizeMake(107, 38);
-
-    _startButton = [[UIButton alloc] initWithFrame: CGRectMake((bounds.size.width - size.width) / 2, 240, size.width, size.height)];
-    [_startButton setImage: [UIImage imageNamed: @"restart"]
-                  forState: UIControlStateNormal];
-    [_startButton addTarget: self
-                     action: @selector(_handleStartButtonTappedEvent:)
-           forControlEvents: UIControlEventTouchUpInside];
-    [[self view] addSubview: _startButton];
-    
-    CGRect frame = CGRectMake((bounds.size.width - size.width) / 2, 300, size.width, size.height);
-    _shareButton = [[UIButton alloc] initWithFrame: frame];
-    [_shareButton setImage: [UIImage imageNamed: @"share"]
-                  forState: UIControlStateNormal];
-    [_shareButton addTarget: self
-                     action: @selector(_handleShareButtonTappedEvent:)
-           forControlEvents: UIControlEventTouchUpInside];
-    
-    [[self view] addSubview: _shareButton];
+//    CGSize size = CGSizeMake(107, 38);
+//    _startButton = [[UIButton alloc] initWithFrame: CGRectMake((bounds.size.width - size.width) / 2, 240, size.width, size.height)];
+//    [_startButton setImage: [UIImage imageNamed: @"restart"]
+//                  forState: UIControlStateNormal];
+//    [_startButton addTarget: self
+//                     action: @selector(_handleStartButtonTappedEvent:)
+//           forControlEvents: UIControlEventTouchUpInside];
+//    [[self view] addSubview: _startButton];
+//    
+//    CGRect frame = CGRectMake((bounds.size.width - size.width) / 2, 300, size.width, size.height);
+//    _shareButton = [[UIButton alloc] initWithFrame: frame];
+//    [_shareButton setImage: [UIImage imageNamed: @"share"]
+//                  forState: UIControlStateNormal];
+//    [_shareButton addTarget: self
+//                     action: @selector(_handleShareButtonTappedEvent:)
+//           forControlEvents: UIControlEventTouchUpInside];
+//    
+//    [[self view] addSubview: _shareButton];
     
 }
 

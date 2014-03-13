@@ -42,16 +42,28 @@
     SKLabelNode * scoreLabel;
     
     bool wasted;
+    SKAction *_swimAnimation;
 }
 
 - (id)initWithSize: (CGSize)size
 {
     if (self = [super initWithSize:size])
-    {        
+    {
+        NSInteger count = 10;
+        NSMutableArray *textures = [NSMutableArray arrayWithCapacity: 10];
+        for (NSInteger i = 1; i < count; ++i)
+        {
+            [textures addObject: [SKTexture textureWithImageNamed: [NSString stringWithFormat: @"turtle%ld", (long)i]]];
+        }
+        
+        _swimAnimation = [SKAction animateWithTextures: textures
+                                          timePerFrame: 0.1
+                                                resize: NO
+                                               restore: YES];
+
         self.physicsWorld.contactDelegate = self;
         [[self physicsWorld] setGravity: CGVectorMake(0, -8)];
         [self initGame];
-        
     }
     return self;
 }
@@ -100,7 +112,7 @@
 {
     clouds = [SKScrollingNode spriteNodeWithImageNamed:@"clouds"];
     clouds.anchorPoint = CGPointZero;
-    clouds.position = CGPointMake(0, floor.size.height + 30);
+    clouds.position = CGPointMake(0, 330);
     clouds.scrollingSpeed = .5;
     clouds.alpha = .5;
     [self addChild:clouds];
@@ -131,9 +143,14 @@
 - (void)createBird
 {
     bird = [BirdNode spriteNodeWithImageNamed:@"bird"];
+
     [bird setPosition:CGPointMake(120, CGRectGetMidY(self.frame))];
     [bird setName:@"bird"];
     [self addChild:bird];
+    
+    [bird runAction: [SKAction repeatActionForever: _swimAnimation]
+            withKey: @"swim"];
+
 }
 
 - (void) createBlocks
@@ -221,6 +238,7 @@
         [bird startPlaying];
     }
     
+    [bird runAction: _swimAnimation];
     [bird bounce];
 }
 
@@ -253,7 +271,8 @@
 - (void)update:(NSTimeInterval)currentTime
 {
     
-    if(wasted){
+    if(wasted)
+    {
         return;
     }
     
@@ -264,6 +283,7 @@
     
     // Other
     [bird update:currentTime];
+
     [self updateBlocks:currentTime];
     [self updateScore:currentTime];
 }
@@ -276,7 +296,8 @@
     }
     
  
-    for(int i=0;i<nbObstacles;i++){
+    for(int i=0;i<nbObstacles;i++)
+    {
         
         PipeNode * topPipe = (PipeNode *) topPipes[i];
         PipeNode * bottomPipe = (PipeNode *) bottomPipes[i];
@@ -335,6 +356,7 @@
 
     NSLog(@"wasted");
     
+    [bird removeActionForKey: @"swim"];
     [DataService playSound: @"collision"];
     
     if([self.delegate respondsToSelector:@selector(eventWasted)])

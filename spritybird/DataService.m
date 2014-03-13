@@ -14,7 +14,9 @@
 
 + (void)playSound: (NSString *)name
 {
-//    return;
+#if DEBUG
+    return;
+#endif
     SystemSoundID soundID = 0;
     NSURL *url = [[NSBundle mainBundle] URLForResource: name
                                          withExtension: @"caf"];
