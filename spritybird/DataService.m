@@ -15,7 +15,7 @@
 + (void)playSound: (NSString *)name
 {
 #if DEBUG
-    return;
+    //return;
 #endif
     SystemSoundID soundID = 0;
     NSURL *url = [[NSBundle mainBundle] URLForResource: name
